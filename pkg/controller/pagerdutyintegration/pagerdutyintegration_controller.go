@@ -159,7 +159,7 @@ type ReconcilePagerDutyIntegration struct {
 func (r *ReconcilePagerDutyIntegration) Reconcile(request reconcile.Request) (reconcile.Result, error) {
 	start := time.Now()
 
-	r.reqLogger = log.WithValues("Request.Namespace", request.Namespace, "Request.Name", request.Name)
+	r.reqLogger = log.WithValues("IsThisIt.Request.Namespace", request.Namespace, "Request.Name", request.Name)
 	r.reqLogger.Info("Reconciling PagerDutyIntegration")
 	if len(os.Getenv("FEDRAMP")) == 0 {
 		r.reqLogger.Info("FEDRAMP environment variable unset, defaulting to false")
