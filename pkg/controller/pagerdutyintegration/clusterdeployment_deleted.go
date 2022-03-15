@@ -58,6 +58,7 @@ func (r *ReconcilePagerDutyIntegration) handleDelete(pdclient pd.Client, pdi *pa
 	}
 
 	ClusterID := cd.Spec.ClusterName
+	// ClusterNamespace := cd.ObjectMeta.Namespace
 
 	deletePDService := true
 
@@ -123,7 +124,7 @@ func (r *ReconcilePagerDutyIntegration) handleDelete(pdclient pd.Client, pdi *pa
 		// we have everything necessary to attempt deletion of the PD service
 		err = pdclient.DeleteService(pdData)
 		if err != nil {
-			r.reqLogger.Error(err, "Failed cleaning up pagerduty.", "Cluster Deployment Namespace", cd.Namespace)
+			r.reqLogger.Error(err, "Failed cleaning up pagerduty.", "Cluster Deployment Namespace", cd.ObjectMeta.Namespace)
 			return err
 		} else {
 			// NOTE: not deleting the configmap if we didn't delete
