@@ -67,7 +67,7 @@ func (r *ReconcilePagerDutyIntegration) handleDelete(pdclient pd.Client, pdi *pa
 		types.NamespacedName{
 			Name:      pdi.Spec.PagerdutyApiKeySecretRef.Name,
 			Namespace: pdi.Spec.PagerdutyApiKeySecretRef.Namespace,
-			CD:        cd.Namespace,
+			CDNameSpace:        cd.Namespace,
 		},
 		pdAPISecret,
 	)
