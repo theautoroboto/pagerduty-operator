@@ -201,7 +201,7 @@ func (r *ReconcilePagerDutyIntegration) handleCreate(pdclient pd.Client, pdi *pa
 		r.reqLogger.Info("syncset not found , create a new one on this ")
 		ss = kube.GenerateSyncSet(cd.Namespace, cd.Name, secret, pdi)
 		if err = controllerutil.SetControllerReference(cd, ss, r.scheme); err != nil {
-			r.reqLogger.Error(err, "Error setting controller reference on syncset ", "Cluster Deployment Namespace", ClusterNamespace))
+			r.reqLogger.Error(err, "Error setting controller reference on syncset ", "Cluster Deployment Namespace", ClusterNamespace)
 			return err
 		}
 		if err := r.client.Create(context.TODO(), ss); err != nil {
