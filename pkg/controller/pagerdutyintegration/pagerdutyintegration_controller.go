@@ -156,14 +156,10 @@ type ReconcilePagerDutyIntegration struct {
 // Note:
 // The Controller will requeue the Request to be processed again if the returned error is non-nil or
 // Result.Requeue is true, otherwise upon completion it will remove the work from the queue.
-//*******************************************************************************************************
-// I need the cluster deployment here
-//*******************************************************************************************************
 func (r *ReconcilePagerDutyIntegration) Reconcile(request reconcile.Request) (reconcile.Result, error) {
 	start := time.Now()
-	cd := hivev1.ClusterDeployment{}
-
-	r.reqLogger = log.WithValues("Request.Namespace", request.Namespace, "Request.Name", request.Name, "I can't access cluster deployment object here", cd.ObjectMeta.Namespace)
+	
+	r.reqLogger = log.WithValues("Request.Namespace", request.Namespace, "Request.Name")
 	r.reqLogger.Info("Reconciling PagerDutyIntegration")
 	if len(os.Getenv("FEDRAMP")) == 0 {
 		r.reqLogger.Info("FEDRAMP environment variable unset, defaulting to false")
