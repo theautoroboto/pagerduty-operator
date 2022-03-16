@@ -163,7 +163,7 @@ func (r *ReconcilePagerDutyIntegration) Reconcile(request reconcile.Request) (re
 	start := time.Now()
 	cd := hivev1.ClusterDeployment{}
 
-	r.reqLogger = log.WithValues("Request.Namespace", request.Namespace, "Request.Name", request.Name, "I can't access cluster deployment object here", cd.Namespace)
+	r.reqLogger = log.WithValues("Request.Namespace", request.Namespace, "Request.Name", request.Name, "I can't access cluster deployment object here", cd.ObjectMeta.Namespace)
 	r.reqLogger.Info("Reconciling PagerDutyIntegration")
 	if len(os.Getenv("FEDRAMP")) == 0 {
 		r.reqLogger.Info("FEDRAMP environment variable unset, defaulting to false")
