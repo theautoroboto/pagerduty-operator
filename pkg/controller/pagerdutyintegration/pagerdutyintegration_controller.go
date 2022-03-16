@@ -158,8 +158,8 @@ type ReconcilePagerDutyIntegration struct {
 // Result.Requeue is true, otherwise upon completion it will remove the work from the queue.
 func (r *ReconcilePagerDutyIntegration) Reconcile(request reconcile.Request) (reconcile.Result, error) {
 	start := time.Now()
-	
-	r.reqLogger = log.WithValues("Request.Namespace", request.Namespace, "Request.Name")
+
+	r.reqLogger = log.WithValues("Request.Namespace", request.Namespace, "Request.Name", request.Name)
 	r.reqLogger.Info("Reconciling PagerDutyIntegration")
 	if len(os.Getenv("FEDRAMP")) == 0 {
 		r.reqLogger.Info("FEDRAMP environment variable unset, defaulting to false")
