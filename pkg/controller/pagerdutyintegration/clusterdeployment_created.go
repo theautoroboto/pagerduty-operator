@@ -159,10 +159,10 @@ func (r *ReconcilePagerDutyIntegration) handleCreate(pdclient pd.Client, pdi *pa
 
 	//add secret part
 	secret := kube.GeneratePdSecret(cd.Namespace, secretName, pdIntegrationKey)
-	r.reqLogger.Info("creating pd secret")
+	r.reqLogger.Info("creating pd secret", "ClusterDeployment Namespace", cd.Namespace)
 	//add reference
 	if err = controllerutil.SetControllerReference(cd, secret, r.scheme); err != nil {
-		r.reqLogger.Error(err, "Error setting controller reference on secret")
+		r.reqLogger.Error(err, "Error setting controller reference on secret", "ClusterDeployment Namespace", cd.Namespace)
 		return err
 	}
 	if err = r.client.Create(context.TODO(), secret); err != nil {
@@ -170,7 +170,7 @@ func (r *ReconcilePagerDutyIntegration) handleCreate(pdclient pd.Client, pdi *pa
 			return err
 		}
 
-		r.reqLogger.Info("the pd secret exist, check if pdIntegrationKey is changed or not")
+		r.reqLogger.Info("the pd secret exist, check if pdIntegrationKey is changed or not", "ClusterDeployment Namespace", cd.Namespace)
 		sc := &corev1.Secret{}
 		err = r.client.Get(context.TODO(), types.NamespacedName{Name: secret.Name, Namespace: cd.Namespace}, sc)
 		if err != nil {
@@ -182,14 +182,14 @@ func (r *ReconcilePagerDutyIntegration) handleCreate(pdclient pd.Client, pdi *pa
 				log.Info("failed to delete existing pd secret")
 				return err
 			}
-			r.reqLogger.Info("creating pd secret")
+			r.reqLogger.Info("creating pd secret", "ClusterDeployment Namespace", cd.Namespace)
 			if err = r.client.Create(context.TODO(), secret); err != nil {
 				return err
 			}
 		}
 	}
 
-	r.reqLogger.Info("Creating syncset")
+	r.reqLogger.Info("Creating syncset", "ClusterDeployment Namespace", cd.Namespace)
 	ss := &hivev1.SyncSet{}
 	err = r.client.Get(context.TODO(), types.NamespacedName{Name: secretName, Namespace: cd.Namespace}, ss)
 	if err != nil {
