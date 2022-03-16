@@ -58,7 +58,6 @@ func (r *ReconcilePagerDutyIntegration) handleDelete(pdclient pd.Client, pdi *pa
 	}
 
 	ClusterID := cd.Spec.ClusterName
-	// ClusterNamespace := cd.ObjectMeta.Namespace
 
 	deletePDService := true
 
